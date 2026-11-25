@@ -151,6 +151,19 @@ app.MapGet("/api/products", async (WarehouseContext context) =>
     return Results.Ok(products);
 }).RequireAuthorization();
 
+app.MapGet("/api/products/by-sku/{sku}", async (string sku, WarehouseContext context) =>
+{
+    var normalizedSku = sku.Trim();
+    var product = await context.Products
+        .Include(p => p.Supplier)
+        .FirstOrDefaultAsync(p => p.SKU.ToLower() == normalizedSku.ToLower());
+
+    if (product == null)
+        return Results.NotFound(new { message = $"No se encontró producto con SKU '{normalizedSku}'." });
+
+    return Results.Ok(product);
+}).RequireAuthorization();
+
 app.MapGet("/api/products/low-stock", async (WarehouseContext context) =>
 {
     var lowStockProducts = await context.Products
@@ -232,8 +245,59 @@ app.MapPost("/api/orders", async (CreateOrderDto dto, WarehouseContext context) 
     }
 }).RequireAuthorization();
 
-app.MapGet("/api/orders", async (WarehouseContext context) =>
-    await context.Orders.Include(o => o.Items).ThenInclude(i => i.Product).ToListAsync()).RequireAuthorization();
+app.MapPost("/api/stock-entries", async (CreateStockEntryDto dto, WarehouseContext context) =>
+{
+    if (dto.Items is null || dto.Items.Count == 0)
+        return Results.BadRequest(new { message = "Debes incluir al menos un producto." });
+
+    await using var transaction = await context.Database.BeginTransactionAsync();
+    try
+    {
+        var updatedProducts = new List<object>();
+
+        foreach (var itemDto in dto.Items)
+        {
+            if (itemDto.Quantity <= 0)
+                return Results.BadRequest(new { message = "La cantidad de entrada debe ser mayor a 0." });
+
+            var product = await context.Products.FindAsync(itemDto.ProductId);
+            if (product is null)
+                return Results.BadRequest(new { message = $"Producto con ID {itemDto.ProductId} no existe." });
+
+            var previousStock = product.StockQuantity;
+            product.StockQuantity += itemDto.Quantity;
+
+            updatedProducts.Add(new
+            {
+                product.Id,
+                product.SKU,
+                product.Name,
+                previousStock,
+                addedQuantity = itemDto.Quantity,
+                newStock = product.StockQuantity
+            });
+        }
+
+        await context.SaveChangesAsync();
+        await transaction.CommitAsync();
+
+        return Results.Ok(new
+        {
+            message = "Entrada de stock registrada con éxito.",
+            reference = string.IsNullOrWhiteSpace(dto.Reference) ? null : dto.Reference.Trim(),
+            items = updatedProducts
+        });
+    }
+    catch (Exception ex)
+    {
+        await transaction.RollbackAsync();
+        return Results.Problem(
+            title: "Error al registrar entrada de stock",
+            detail: ex.InnerException?.Message ?? ex.Message,
+            statusCode: StatusCodes.Status500InternalServerError
+        );
+    }
+}).RequireAuthorization();
 
 app.Run();
 
@@ -242,3 +306,4 @@ public record RegisterDto(string Username, string Email, string Password);
 public record LoginDto(string Email, string Password);
 public record CreateOrderDto(List<OrderItemDto> Items);
 public record OrderItemDto(int ProductId, int Quantity);
+public record CreateStockEntryDto(string? Reference, List<OrderItemDto> Items);

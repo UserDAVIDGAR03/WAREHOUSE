@@ -22,10 +22,12 @@ export const authService = {
 
 export const warehouseService = {
   getProducts: () => api.get('/products'),
+  getProductBySku: (sku) => api.get(`/products/by-sku/${encodeURIComponent(sku)}`),
   createProduct: (payload) => api.post('/products', payload),
   getLowStock: () => api.get('/products/low-stock'),
   getOrders: () => api.get('/orders'),
   createOrder: (payload) => api.post('/orders', payload),
+  createStockEntry: (payload) => api.post('/stock-entries', payload),
   getSuppliers: () => api.get('/suppliers'),
   createSupplier: (payload) => api.post('/suppliers', payload),
 };

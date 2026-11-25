@@ -1,24 +1,74 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# ==============================================================================
+# .NET / C# / ASP.NET Core
+# ==============================================================================
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Aa]pp_[Rr]untime*/
+[Aa]pp_[Ww]eb[Rr]untime*/
+[Cc]apture/
+[Cc]overage/
+[Cc]overage*.xml
+[Cc]overage*.json
+[Cc]overage*. cobertura.xml
+_Chutzpah*/
+*.[Cc]ache
+*.![Cc]ache
+*.[Pp]ublish.xml
+*.pubxml
+*.publishproj
+*.vscode/
+*.user
+*.userosscache
+*.sln.docstates
 
-node_modules
-dist
-dist-ssr
-*.local
+# MSTest / xUnit / NUnit
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
+# IIS Express
+[Ii][Ii][Ss] [Ee]xpress/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+*.DS_Store
+Thumbs.db
+
+# ==============================================================================
+# Node.js / React / Vite
+# ==============================================================================
+node_modules/
+dist/
+dist-ssr/
+build/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.eslintcache
+.vite/
+
+# ==============================================================================
+# Entornos, secretos y bases de datos locales
+# ==============================================================================
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-journal
+*.db
+
+# ==============================================================================
+# Docker
+# ==============================================================================
+docker-compose.override.yml

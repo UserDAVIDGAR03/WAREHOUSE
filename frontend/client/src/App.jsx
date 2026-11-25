@@ -108,6 +108,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 relative selection:bg-white selection:text-zinc-950">
+      {/* Retícula técnica coherente con Login, Register y Welcome */}
       <div
         className="pointer-events-none fixed inset-0 opacity-[0.05]"
         style={{
@@ -144,6 +145,7 @@ export default function App() {
         />
 
         <main className="flex-1 w-full min-w-0 space-y-6">
+          {/* Encabezado contextual de la vista */}
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 pb-4 border-b border-zinc-800/90">
             <div>
               <div className="inline-flex items-center gap-2 text-[11px] font-mono text-zinc-400 mb-1.5">
@@ -175,6 +177,7 @@ export default function App() {
               products={products}
               loading={loading}
               onAddClick={() => setActiveTab('add')}
+              onCreated={fetchAllData}
             />
           )}
           {activeTab === 'suppliers' && (
