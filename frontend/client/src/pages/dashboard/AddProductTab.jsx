@@ -34,43 +34,43 @@ export default function AddProductTab({ suppliers, onCreated, onCancel }) {
   };
 
   return (
-    <div className="max-w-3xl bg-slate-900/80 border border-slate-800 rounded-3xl shadow-xl p-8 lg:p-12">
-      <div className="mb-8">
-        <h2 className="text-2xl font-extrabold text-white">Registrar nuevo producto</h2>
-        <p className="text-sm text-slate-400 mt-1">
+    <div className="max-w-3xl bg-zinc-900/90 border border-zinc-800 rounded-xl p-6 lg:p-8">
+      <div className="mb-6 pb-4 border-b border-zinc-800">
+        <h2 className="text-lg font-semibold text-white tracking-tight">Registrar nuevo producto</h2>
+        <p className="text-xs text-zinc-400 mt-0.5">
           Completa la ficha técnica del artículo para integrarlo al catálogo activo.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6 text-sm">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="space-y-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               SKU (Código único)
             </label>
             <input
               type="text"
               value={newProduct.sku}
               onChange={(e) => setNewProduct({ ...newProduct, sku: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white font-mono focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+              className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white font-mono placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
               placeholder="Ej. SKU-9920"
               required
             />
           </div>
 
           <div>
-            <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               Proveedor asignado
             </label>
             <select
               value={newProduct.supplierId}
               onChange={(e) => setNewProduct({ ...newProduct, supplierId: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+              className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
               required
             >
               {suppliers.length === 0 && <option value={1}>Proveedor por defecto (ID: 1)</option>}
               {suppliers.map((s) => (
-                <option key={s.id} value={s.id} className="bg-slate-950 text-white">
+                <option key={s.id} value={s.id} className="bg-zinc-950 text-white">
                   {s.name} (ID: {s.id})
                 </option>
               ))}
@@ -79,34 +79,34 @@ export default function AddProductTab({ suppliers, onCreated, onCancel }) {
         </div>
 
         <div>
-          <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+          <label className="block text-xs font-medium text-zinc-300 mb-1.5">
             Nombre del artículo
           </label>
           <input
             type="text"
             value={newProduct.name}
             onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+            className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
             placeholder="Ej. Tarima industrial reforzada"
             required
           />
         </div>
 
         <div>
-          <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+          <label className="block text-xs font-medium text-zinc-300 mb-1.5">
             Descripción técnica
           </label>
           <textarea
             value={newProduct.description}
             onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 h-24 resize-none"
+            className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all h-20 resize-none"
             placeholder="Dimensiones, material, pasillo o notas de almacenamiento..."
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               Precio unitario ($)
             </label>
             <input
@@ -114,52 +114,52 @@ export default function AddProductTab({ suppliers, onCreated, onCancel }) {
               step="0.01"
               value={newProduct.unitPrice}
               onChange={(e) => setNewProduct({ ...newProduct, unitPrice: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white font-mono focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+              className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white font-mono placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
               placeholder="0.00"
               required
             />
           </div>
 
           <div>
-            <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               Stock inicial
             </label>
             <input
               type="number"
               value={newProduct.stockQuantity}
               onChange={(e) => setNewProduct({ ...newProduct, stockQuantity: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white font-mono focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+              className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white font-mono placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
               placeholder="0"
               required
             />
           </div>
 
           <div>
-            <label className="block font-bold text-slate-300 mb-2 uppercase tracking-wider text-xs">
+            <label className="block text-xs font-medium text-zinc-300 mb-1.5">
               Alerta stock mínimo
             </label>
             <input
               type="number"
               value={newProduct.minimumStockAlert}
               onChange={(e) => setNewProduct({ ...newProduct, minimumStockAlert: e.target.value })}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3.5 text-white font-mono focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+              className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg px-3.5 py-2 text-sm text-white font-mono placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
               placeholder="5"
               required
             />
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 pt-3">
           <button
             type="submit"
-            className="flex-1 bg-gradient-to-r from-cyan-400 to-cyan-500 hover:from-cyan-300 hover:to-cyan-400 text-slate-950 font-bold py-4 rounded-xl transition-all shadow-lg shadow-cyan-500/20 text-base"
+            className="flex-1 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold py-2.5 px-4 rounded-lg text-sm transition-colors cursor-pointer"
           >
             Guardar producto en inventario
           </button>
           <button
             type="button"
             onClick={onCancel}
-            className="px-6 py-4 rounded-xl border border-slate-700 hover:bg-slate-800 text-slate-300 font-semibold transition-all"
+            className="px-5 py-2.5 rounded-lg border border-zinc-800 hover:bg-zinc-800/70 text-zinc-300 text-sm font-medium transition-colors cursor-pointer"
           >
             Cancelar
           </button>

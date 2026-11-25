@@ -3,33 +3,30 @@ import { LogOut } from 'lucide-react';
 
 export default function Header({ onLogout }) {
   return (
-    <header className="h-20 bg-slate-900/90 backdrop-blur-md border-b border-slate-800 px-6 lg:px-10 flex justify-between items-center sticky top-0 z-30">
-      <div className="flex items-center gap-3.5">
-        <div className="w-10 h-10 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-xl flex items-center justify-center text-slate-950 font-black text-lg shadow-md shadow-cyan-500/20">
+    <header className="h-16 bg-zinc-950/95 border-b border-zinc-800/90 px-4 sm:px-6 lg:px-8 flex justify-between items-center sticky top-0 z-30">
+      <div className="flex items-center gap-3">
+        <div className="h-8 w-8 rounded-lg bg-white text-zinc-950 flex items-center justify-center font-bold text-sm shadow-sm">
           W
         </div>
-        <div>
-          <span className="font-extrabold text-lg text-white tracking-tight block leading-none">
+        <div className="flex items-center gap-2.5">
+          <span className="font-semibold text-sm sm:text-base text-white tracking-tight">
             Warehouse OS
           </span>
-          <span className="text-[11px] text-slate-400 font-medium">Enterprise Inventory Suite</span>
+          <span className="hidden sm:inline-block text-zinc-700">/</span>
+          <span className="hidden sm:inline text-xs font-mono text-zinc-400">
+            INVENTORY SUITE
+          </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-5 text-sm">
-        <div className="hidden md:flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>PostgreSQL Conectado</span>
-        </div>
-
-        <button
-          onClick={onLogout}
-          className="flex items-center gap-2 text-rose-400 hover:text-white font-semibold transition-all px-4 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500 border border-rose-500/20"
-        >
-          <LogOut size={16} />
-          <span>Cerrar sesión</span>
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={onLogout}
+        className="inline-flex items-center gap-2 text-xs font-medium text-zinc-300 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+      >
+        <LogOut size={14} />
+        <span>Cerrar sesión</span>
+      </button>
     </header>
   );
 }

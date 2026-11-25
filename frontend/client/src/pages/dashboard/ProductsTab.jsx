@@ -20,16 +20,16 @@ export default function ProductsTab({ products, loading, onAddClick }) {
   );
 
   return (
-    <div className="bg-slate-900/80 border border-slate-800 rounded-3xl shadow-xl overflow-hidden">
-      <div className="p-6 lg:p-8 border-b border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl overflow-hidden">
+      <div className="p-5 lg:p-6 border-b border-zinc-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-xl font-extrabold text-white">Inventario general</h2>
-          <p className="text-sm text-slate-400 mt-1">Consulta existencias, precios y proveedores en tiempo real.</p>
+          <h2 className="text-lg font-semibold text-white tracking-tight">Inventario general</h2>
+          <p className="text-xs text-zinc-400 mt-0.5">Consulta existencias, precios y proveedores en tiempo real.</p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-          <div className="relative w-full sm:w-80">
-            <Search size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+        <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full md:w-auto">
+          <div className="relative w-full sm:w-72">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
             <input
               type="text"
               placeholder="Buscar por SKU o producto..."
@@ -38,24 +38,26 @@ export default function ProductsTab({ products, loading, onAddClick }) {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+              className="w-full bg-zinc-950 border border-zinc-800 hover:border-zinc-700 rounded-lg pl-9 pr-3.5 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-all"
             />
           </div>
 
-          <div className="flex gap-3 w-full sm:w-auto">
+          <div className="flex gap-2.5 w-full sm:w-auto">
             <button
+              type="button"
               onClick={() => exportProductsToCSV(products)}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-slate-950 border border-slate-700 hover:border-slate-600 hover:bg-slate-800 text-slate-200 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-zinc-950 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-800/70 text-zinc-200 text-xs font-medium px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
             >
-              <Download size={16} />
-              CSV
+              <Download size={15} />
+              <span>CSV</span>
             </button>
             <button
+              type="button"
               onClick={onAddClick}
-              className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-sm font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-cyan-500/20"
+              className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
             >
-              <Plus size={17} strokeWidth={2.5} />
-              Agregar
+              <Plus size={15} strokeWidth={2.2} />
+              <span>Agregar</span>
             </button>
           </div>
         </div>
@@ -64,31 +66,31 @@ export default function ProductsTab({ products, loading, onAddClick }) {
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse text-sm">
           <thead>
-            <tr className="border-b border-slate-800 text-slate-400 font-bold bg-slate-950/60 uppercase tracking-wider text-xs">
-              <th className="py-4 px-8">SKU</th>
-              <th className="py-4 px-5">Producto</th>
-              <th className="py-4 px-5">Proveedor</th>
-              <th className="py-4 px-5 text-right">Precio unitario</th>
-              <th className="py-4 px-8 text-right">Stock disponible</th>
+            <tr className="border-b border-zinc-800 text-zinc-400 font-medium bg-zinc-950 text-xs">
+              <th className="py-3 px-6">SKU</th>
+              <th className="py-3 px-4">Producto</th>
+              <th className="py-3 px-4">Proveedor</th>
+              <th className="py-3 px-4 text-right">Precio unitario</th>
+              <th className="py-3 px-6 text-right">Stock disponible</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-800/70">
+          <tbody className="divide-y divide-zinc-800/80">
             {loading ? (
               [...Array(5)].map((_, i) => (
                 <tr key={i} className="animate-pulse">
-                  <td className="py-5 px-8"><div className="h-5 bg-slate-800 rounded w-24"></div></td>
-                  <td className="py-5 px-5"><div className="h-5 bg-slate-800 rounded w-52"></div></td>
-                  <td className="py-5 px-5"><div className="h-5 bg-slate-800 rounded w-36"></div></td>
-                  <td className="py-5 px-5 text-right"><div className="h-5 bg-slate-800 rounded w-20 ml-auto"></div></td>
-                  <td className="py-5 px-8 text-right"><div className="h-6 bg-slate-800 rounded w-24 ml-auto"></div></td>
+                  <td className="py-4 px-6"><div className="h-4 bg-zinc-800 rounded w-20"></div></td>
+                  <td className="py-4 px-4"><div className="h-4 bg-zinc-800 rounded w-48"></div></td>
+                  <td className="py-4 px-4"><div className="h-4 bg-zinc-800 rounded w-32"></div></td>
+                  <td className="py-4 px-4 text-right"><div className="h-4 bg-zinc-800 rounded w-16 ml-auto"></div></td>
+                  <td className="py-4 px-6 text-right"><div className="h-5 bg-zinc-800 rounded w-24 ml-auto"></div></td>
                 </tr>
               ))
             ) : paginatedProducts.length === 0 ? (
               <tr>
-                <td colSpan="5" className="py-20 text-center">
-                  <Package size={40} className="mx-auto text-slate-700 mb-3" />
-                  <p className="text-slate-400 font-semibold text-base">No se encontraron productos</p>
-                  <p className="text-slate-500 text-xs mt-1">Intenta con otro término de búsqueda o registra un artículo nuevo.</p>
+                <td colSpan="5" className="py-16 text-center">
+                  <Package size={32} className="mx-auto text-zinc-700 mb-2.5" />
+                  <p className="text-zinc-300 font-medium text-sm">No se encontraron productos</p>
+                  <p className="text-zinc-500 text-xs mt-1">Intenta con otro término de búsqueda o registra un artículo nuevo.</p>
                 </td>
               </tr>
             ) : (
@@ -96,36 +98,36 @@ export default function ProductsTab({ products, loading, onAddClick }) {
                 const isLow = p.stockQuantity <= p.minimumStockAlert;
                 const fillPct = Math.min(100, Math.round((p.stockQuantity / Math.max(p.minimumStockAlert * 3, 1)) * 100));
                 return (
-                  <tr key={p.id} className="hover:bg-slate-800/40 transition-colors">
-                    <td className="py-5 px-8">
-                      <span className="font-mono text-xs font-bold px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                  <tr key={p.id} className="hover:bg-zinc-800/40 transition-colors">
+                    <td className="py-3.5 px-6">
+                      <span className="font-mono text-xs font-medium px-2 py-0.5 rounded bg-zinc-950 text-zinc-200 border border-zinc-800">
                         {p.sku}
                       </span>
                     </td>
-                    <td className="py-5 px-5">
-                      <div className="font-bold text-white">{p.name}</div>
+                    <td className="py-3.5 px-4">
+                      <div className="font-medium text-white">{p.name}</div>
                       {p.description && (
-                        <div className="text-xs text-slate-500 truncate max-w-xs mt-0.5">{p.description}</div>
+                        <div className="text-xs text-zinc-500 truncate max-w-xs mt-0.5">{p.description}</div>
                       )}
                     </td>
-                    <td className="py-5 px-5 text-slate-300 font-medium">
+                    <td className="py-3.5 px-4 text-zinc-300 text-xs">
                       {p.supplier?.name || `Proveedor #${p.supplierId}`}
                     </td>
-                    <td className="py-5 px-5 text-right font-mono font-semibold text-slate-200">
+                    <td className="py-3.5 px-4 text-right font-mono text-xs font-medium text-zinc-200">
                       ${p.unitPrice.toFixed(2)}
                     </td>
-                    <td className="py-5 px-8 text-right">
+                    <td className="py-3.5 px-6 text-right">
                       <div className="inline-flex flex-col items-end gap-1.5">
                         <span
-                          className={`px-3 py-1 rounded-lg font-mono font-bold text-xs ${
+                          className={`px-2.5 py-0.5 rounded-md font-mono font-semibold text-xs ${
                             isLow
-                              ? 'bg-rose-500/15 text-rose-400 border border-rose-500/30'
+                              ? 'bg-rose-500/15 text-rose-400 border border-rose-500/25'
                               : 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25'
                           }`}
                         >
                           {p.stockQuantity} unids.
                         </span>
-                        <div className="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                        <div className="w-20 h-1 bg-zinc-800 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${isLow ? 'bg-rose-500' : 'bg-emerald-400'}`}
                             style={{ width: `${fillPct}%` }}
@@ -141,25 +143,27 @@ export default function ProductsTab({ products, loading, onAddClick }) {
         </table>
       </div>
 
-      <div className="p-5 px-8 border-t border-slate-800 flex items-center justify-between text-sm text-slate-400 bg-slate-950/40">
+      <div className="px-6 py-3.5 border-t border-zinc-800 flex items-center justify-between text-xs text-zinc-400 bg-zinc-950/60">
         <span>
-          Página <strong className="text-white">{currentPage}</strong> de{' '}
-          <strong className="text-white">{totalPages}</strong> ({filteredProducts.length} registros)
+          Página <strong className="text-white font-mono">{currentPage}</strong> de{' '}
+          <strong className="text-white font-mono">{totalPages}</strong> ({filteredProducts.length} registros)
         </span>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
+            type="button"
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="p-2.5 border border-slate-800 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white transition-all"
+            className="p-1.5 border border-zinc-800 rounded-lg bg-zinc-900 hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed text-white transition-colors cursor-pointer"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={16} />
           </button>
           <button
+            type="button"
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="p-2.5 border border-slate-800 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed text-white transition-all"
+            className="p-1.5 border border-zinc-800 rounded-lg bg-zinc-900 hover:bg-zinc-800 disabled:opacity-30 disabled:cursor-not-allowed text-white transition-colors cursor-pointer"
           >
-            <ChevronRight size={18} />
+            <ChevronRight size={16} />
           </button>
         </div>
       </div>

@@ -25,6 +25,7 @@ export const warehouseService = {
   createProduct: (payload) => api.post('/products', payload),
   getLowStock: () => api.get('/products/low-stock'),
   getOrders: () => api.get('/orders'),
+  createOrder: (payload) => api.post('/orders', payload),
   getSuppliers: () => api.get('/suppliers'),
   createSupplier: (payload) => api.post('/suppliers', payload),
 };
