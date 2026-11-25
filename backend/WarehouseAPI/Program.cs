@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,7 +22,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddDbContext<WarehouseContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Configurar Autenticación JWT
+// Configurar AutenticaciÃ³n JWT
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "SuperSecretEnterpriseSecurityKeyForWarehouseApi2026!";
 var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
@@ -47,7 +47,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddAuthorization();
 
-// Configurar Políticas de CORS
+// Configurar PolÃ­ticas de CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactApp", policy =>
@@ -89,11 +89,11 @@ app.MapGet("/api/health", async (WarehouseContext context) =>
     }
 });
 
-// B. Autenticación (Register y Login)
+// B. AutenticaciÃ³n (Register y Login)
 app.MapPost("/api/auth/register", async (RegisterDto dto, WarehouseContext context) =>
 {
     if (await context.Users.AnyAsync(u => u.Email == dto.Email))
-        return Results.BadRequest(new { message = "El correo ya está registrado." });
+        return Results.BadRequest(new { message = "El correo ya estÃ¡ registrado." });
 
     var hashedPassword = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
@@ -107,7 +107,7 @@ app.MapPost("/api/auth/register", async (RegisterDto dto, WarehouseContext conte
     context.Users.Add(user);
     await context.SaveChangesAsync();
 
-    return Results.Created($"/api/auth/user/{user.Id}", new { message = "Usuario registrado con éxito" });
+    return Results.Created($"/api/auth/user/{user.Id}", new { message = "Usuario registrado con Ã©xito" });
 });
 
 app.MapPost("/api/auth/login", async (LoginDto dto, WarehouseContext context, IConfiguration config) =>
@@ -115,7 +115,7 @@ app.MapPost("/api/auth/login", async (LoginDto dto, WarehouseContext context, IC
     var user = await context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
     
     if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
-        return Results.BadRequest(new { message = "Credenciales inválidas." });
+        return Results.BadRequest(new { message = "Credenciales invÃ¡lidas." });
 
     var tokenHandler = new JwtSecurityTokenHandler();
     var key = Encoding.UTF8.GetBytes(config["Jwt:Key"] ?? "SuperSecretEnterpriseSecurityKeyForWarehouseApi2026!");
@@ -133,7 +133,7 @@ app.MapPost("/api/auth/login", async (LoginDto dto, WarehouseContext context, IC
     return Results.Ok(new { token = tokenString, username = user.Username, role = user.Role });
 });
 
-// C. Gestión de Proveedores
+// C. GestiÃ³n de Proveedores
 app.MapGet("/api/suppliers", async (WarehouseContext context) => 
     await context.Suppliers.Include(s => s.Products).ToListAsync()).RequireAuthorization();
 
@@ -144,7 +144,7 @@ app.MapPost("/api/suppliers", async (Supplier supplier, WarehouseContext context
     return Results.Created($"/api/suppliers/{supplier.Id}", supplier);
 }).RequireAuthorization();
 
-// D. Gestión de Productos e Inventario
+// D. GestiÃ³n de Productos e Inventario
 app.MapGet("/api/products", async (WarehouseContext context) =>
 {
     var products = await context.Products.Include(p => p.Supplier).ToListAsync();
@@ -159,7 +159,7 @@ app.MapGet("/api/products/by-sku/{sku}", async (string sku, WarehouseContext con
         .FirstOrDefaultAsync(p => p.SKU.ToLower() == normalizedSku.ToLower());
 
     if (product == null)
-        return Results.NotFound(new { message = $"No se encontró producto con SKU '{normalizedSku}'." });
+        return Results.NotFound(new { message = $"No se encontrÃ³ producto con SKU '{normalizedSku}'." });
 
     return Results.Ok(product);
 }).RequireAuthorization();
@@ -191,10 +191,21 @@ app.MapPut("/api/products/{id}/stock", async (int id, int quantityChange, Wareho
     if (product.StockQuantity < 0) product.StockQuantity = 0;
 
     await context.SaveChangesAsync();
-    return Results.Ok(new { message = "Stock actualizado con éxito", product });
+    return Results.Ok(new { message = "Stock actualizado con Ã©xito", product });
 }).RequireAuthorization();
 
-// E. Procesamiento de Órdenes Empresariales
+// E. Procesamiento de Ã“rdenes Empresariales
+app.MapGet("/api/orders", async (WarehouseContext context) =>
+{
+    var orders = await context.Orders
+        .Include(o => o.Items)
+        .ThenInclude(i => i.Product)
+        .OrderByDescending(o => o.Id)
+        .ToListAsync();
+
+    return Results.Ok(orders);
+}).RequireAuthorization();
+
 app.MapPost("/api/orders", async (CreateOrderDto dto, WarehouseContext context) =>
 {
     using var transaction = await context.Database.BeginTransactionAsync();
@@ -283,7 +294,7 @@ app.MapPost("/api/stock-entries", async (CreateStockEntryDto dto, WarehouseConte
 
         return Results.Ok(new
         {
-            message = "Entrada de stock registrada con éxito.",
+            message = "Entrada de stock registrada con Ã©xito.",
             reference = string.IsNullOrWhiteSpace(dto.Reference) ? null : dto.Reference.Trim(),
             items = updatedProducts
         });
