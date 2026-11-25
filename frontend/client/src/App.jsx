@@ -132,7 +132,7 @@ export default function App() {
 
       <Header onLogout={handleLogout} />
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 items-start">
+      <div className="relative z-10 max-w-360 mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6 items-start">
         <Sidebar
           activeTab={activeTab}
           onSelectTab={setActiveTab}
